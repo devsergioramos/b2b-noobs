@@ -8,7 +8,7 @@
 
         <b-row class="my-5">
 
-          <h2>Hello, Guys!</h2>
+          <h2>Admin</h2>
 
         </b-row>
 
@@ -21,8 +21,8 @@
 
 <script>
 
-import Header from './site/components/static/Header.vue'
-import Footer from './site/components/static/Footer.vue'
+import Header from '../site/components/static/Header.vue'
+import Footer from '../site/components/static/Footer.vue'
 
 export default {
   name: 'App',
