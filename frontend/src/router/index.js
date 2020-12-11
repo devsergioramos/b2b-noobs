@@ -1,15 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Admin from '@/template/Admin'
+import Site from '@/template/Site'
+//import site from '@/views/Site'
+import dashboard from '@/views/Dashboard'
 
 Vue.use(Router)
 
-const home = {template:"<div>Home</div>"}
 export default new Router({
-    routes:[{
+  mode: 'history',
+    routes: [
+      {
+        path: '/',
+        component: Site
+      },
+      {
         path: '/admin',
-        //children: [{
-        name: "admin",
-        component: home //() => import('@/pages/Admin')
-        //}]
-    }]
-})
+        component: Admin,
+        children:[
+          {
+            path: '/admin/dashboard',
+            component: dashboard
+          }
+        ]
+      }
+    ]
+  })
