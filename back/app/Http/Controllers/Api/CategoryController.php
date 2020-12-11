@@ -105,11 +105,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $id)
+    public function show(Category $categoria)
     {
         try {
 
-            $item = $id;
+            $item = $categoria;
 
             return response()->json($item);
 
@@ -134,7 +134,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $id)
+    public function edit(Category $categoria)
     {
         //
     }
@@ -146,7 +146,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $id)
+    public function update(Request $request, Category $categoria)
     {
         $rules = [
             'name' => ['required', 'string', 'max:255', Rule::unique('categories')->ignore($request->id)],
@@ -165,7 +165,7 @@ class CategoryController extends Controller
 
             $slug = str_slug($request->name);
 
-            $model = $id;
+            $model = $categoria;
 
             $model->name = $request->name;
             $model->color = $request->color;
@@ -203,11 +203,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $id)
+    public function destroy(Category $categoria)
     {
         try {
          
-            $model = $id;
+            $model = $categoria;
 
             $deleted = $model->delete();
 

@@ -106,11 +106,11 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $id)
+    public function show(Product $produto)
     {
         try {
 
-            $item = $id;
+            $item = $produto;
 
             return response()->json($item);
 
@@ -135,7 +135,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $id)
+    public function edit(Product $produto)
     {
         //
     }
@@ -147,7 +147,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $id)
+    public function update(Request $request, Product $produto)
     {
         $rules = [
             'name' => ['required', 'string', 'max:255'],
@@ -166,7 +166,7 @@ class ProductController extends Controller
 
         try {
 
-            $model = $id;
+            $model = $produto;
 
             $model->category_id = $request->category_id;
             $model->name = $request->name;
@@ -205,11 +205,11 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $id)
+    public function destroy(Product $produto)
     {
         try {
          
-            $model = $id;
+            $model = $produto;
 
             $deleted = $model->delete();
 
