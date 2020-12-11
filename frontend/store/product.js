@@ -94,8 +94,8 @@ export const state = () => ({
 
       this.commit("config/SET_LOADING", true)
 
-      const items = await this.$axios.$post('/api/produtos',{where:payload}).then(response => {
-
+      const items = await this.$axios.$get('/api/produto').then(response => {
+      
         if(response.items !== undefined){  
 
           this.commit("config/SET_LOADING", false)

@@ -27,9 +27,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $items = $this->model::all();
+        $items = $this->model::with('products')->get();
 
-        return response()->json($items);
+        return response()->json(['items'=>$items]);
     }
 
     /**
@@ -79,7 +79,10 @@ class CategoryController extends Controller
 
             $response .= ' Cadastrada com Sucesso!';
 
-            return response()->json(['status'=>true,'msg'=>$response]);
+            $products = \App\Model\Product::whereCategoryId($model->id);
+            $model->products = $products;
+
+            return response()->json(['status'=>true,'msg'=>$response,'item'=>$model]);
 
         } catch (\Exception $e) {//errors exceptions
 
@@ -111,7 +114,7 @@ class CategoryController extends Controller
 
             $item = $categoria;
 
-            return response()->json($item);
+            return response()->json(['item'=>$item]);
 
         } catch (\Exception $e) {//errors exceptions
 
@@ -177,7 +180,10 @@ class CategoryController extends Controller
 
             $response .= ' Editada com Sucesso!';
 
-            return response()->json(['status'=>true,'msg'=>$response]);
+            $products = \App\Model\Product::whereCategoryId($model->id);
+            $model->products = $products;
+
+            return response()->json(['status'=>true,'msg'=>$response,'item'=>$model]);
 
         } catch (\Exception $e) {//errors exceptions
 

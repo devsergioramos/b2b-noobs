@@ -45,7 +45,7 @@
                     sm="6"
                     md="6"
                   >
-                  Price
+                  Preço
                     <v-text-field
                       v-model="dataItem.price"
                       type="number"
@@ -59,14 +59,18 @@
                     sm="6"
                     md="6"
                   >
+                  Status
                   <v-select 
                     v-model="dataItem.status"
                     :items="status"
                     :label="'Status'"  
                     :disabled="disabled"
-                    item-name="name"
+                    item-text="name"
                     item-value="value"
-                    
+                    persistent-hint
+                    return-object
+                    single-line
+                    @change="changeStatus($event)"
                   ></v-select>
                   </v-col>
 
@@ -84,10 +88,10 @@
                     :items="categories"
                     :label="'Categoria'"  
                     :disabled="disabled"
-                    item-name="name"
+                    item-text="name"
                     item-value="id"
-                    @change="dataItem.category_id = dataItem.category.id"
-                    
+                    no-data-text="Não possui categorias cadastradas"
+                    @change="changeCategory($event)"
                   ></v-select>
                   </v-col>
 
@@ -155,7 +159,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
         status: [
           {
             name:'Pendente',
-            value:1
+            value:0
           },
           {
             name:'Ativo',
@@ -191,6 +195,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
         item: "product/item",//item selecionado
         indexItem: "product/indexItem",
         hasItem: "product/hasItem",
+        categories: "category/items"
       }),
       dialogTitle () {
 
@@ -209,6 +214,12 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
     },
     methods: {
 
+      changeStatus(event){
+        this.dataItem.status = event.value;
+      },
+      changeCategory(event){
+        this.dataItem.category_id = event;
+      },
       close () {
         
         this.$store.dispatch('product/reset');
@@ -221,8 +232,8 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
           let mode = 'update'
 
-          if(this.isNew) mode = 'store'        
-
+          if(this.isNew) mode = 'store'  
+          
           this.$nextTick(() => {
             this.$store.dispatch('product/'+mode, this.dataItem);      
           })
@@ -233,7 +244,13 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
     watch: {
       isForm(val) {
 
-        this.dataItem = {};
+        this.$store.dispatch('category/fetchItems');
+
+        this.dataItem = {
+          category: {
+            id:''
+          }
+        };
 
         if(this.hasItem){
 

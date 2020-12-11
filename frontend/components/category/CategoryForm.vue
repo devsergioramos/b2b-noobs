@@ -32,6 +32,7 @@
                   >
                     <v-text-field
                       v-model="dataItem.name"
+                      value="color"
                       label="Nome"
                       :rules="[v => !!v || 'Nome é obrigatório']"
                       :disabled="disabled"
@@ -45,10 +46,12 @@
                     sm="6"
                     md="6"
                   >
-                  Color
+                  Cor
                     <v-color-picker
+                      v-model="color"
                       dot-size="25"
                       swatches-max-height="200"
+                      :rules="[v => !!v || 'Escola a Cor']"
                     ></v-color-picker>
                   </v-col>
                   <v-col
@@ -56,14 +59,15 @@
                     sm="6"
                     md="6"
                   >
+                  Status
                   <v-select 
                     v-model="dataItem.status"
                     :items="status"
                     :label="'Status'"  
                     :disabled="disabled"
-                    item-name="name"
+                    item-text="name"
                     item-value="value"
-                    
+                    :rules="[v => !!v || 'Selecione o Status']"
                   ></v-select>
                   </v-col>
 
@@ -114,10 +118,11 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
         label: 'Categoria',
         isValid: '',
         dataItem:{},
+        color: '',
         status: [
           {
             name:'Pendente',
-            value:1
+            value:0
           },
           {
             name:'Ativo',
@@ -183,7 +188,9 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
           let mode = 'update'
 
-          if(this.isNew) mode = 'store'        
+          if(this.isNew) mode = 'store'  
+          
+          this.dataItem.color = this.color;
 
           this.$nextTick(() => {
             this.$store.dispatch('category/'+mode, this.dataItem);      
@@ -195,7 +202,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
     watch: {
       isForm(val) {
 
-        this.dataItem = {};
+        //this.dataItem = {color:"#FFF"};
 
         if(this.hasItem){
 

@@ -62,7 +62,7 @@ export default {
   },*/
   pwa: {
     manifest: {
-      name: 'Nuxt.js hey-fit',
+      name: 'Nuxt.js b2b-noobs',
       short_name: 'Nuxt.js PWA',
       start_url: '/',
       theme_color: '#424242',
@@ -76,15 +76,16 @@ export default {
   build: {
   },
   axios: {
-    proxy: true,
-    // proxyHeaders: false
-    //baseURL: 'http://localhost:4000',
-    //proxyHeaders: false,
-    //credentials: false
+    /* set API_URL environment variable to configure access to the API
+    */
+    baseURL: 'http://localhost.b2b-noobs',
+    redirectError: {
+      404: '/notfound'
+    }
   },
   proxy: {
     '/api': {
-      target: 'http://localhost:4000',
+      target: 'http://localhost.b2b-noobs',
       pathRewrite: {
         '^/api' : '/'
       },changeOrigin: true

@@ -27,9 +27,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $items = $this->model::all();
+        $items = $this->model::with('category')->get();
 
-        return response()->json($items);
+        return response()->json(['items'=>$items]);
     }
 
     /**
@@ -55,7 +55,7 @@ class ProductController extends Controller
             'category_id' => ['required'],
             'price' => ['required'],
             'status' => ['required'],
-            'image' => ['required', 'string', 'max:255'],
+            //'image' => ['required', 'string', 'max:255'],
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -73,14 +73,17 @@ class ProductController extends Controller
             $model->name = $request->name;
             $model->price = $request->price;
             $model->status = $request->status;
-            $model->image = $request->image;
+            //$model->image = $request->image;
             $save = $model->save();
 
             $response = 'Produto';
 
             $response .= ' Cadastrado com Sucesso!';
 
-            return response()->json(['status'=>true,'msg'=>$response]);
+            $category = \App\Model\Category::find($request->category_id);
+            $model->category = $category;
+
+            return response()->json(['status'=>true,'msg'=>$response,'item'=>$model]);
 
         } catch (\Exception $e) {//errors exceptions
 
@@ -112,7 +115,7 @@ class ProductController extends Controller
 
             $item = $produto;
 
-            return response()->json($item);
+            return response()->json(['item'=>$item]);
 
         } catch (\Exception $e) {//errors exceptions
 
@@ -179,7 +182,10 @@ class ProductController extends Controller
 
             $response .= ' Editado com Sucesso!';
 
-            return response()->json(['status'=>true,'msg'=>$response]);
+            $category = \App\Model\Category::find($request->category_id);
+            $model->category = $category;
+
+            return response()->json(['status'=>true,'msg'=>$response,'item'=>$model]);
 
         } catch (\Exception $e) {//errors exceptions
 

@@ -132,7 +132,12 @@
       {{item.status == 0 ?'Pendente':item.status == 1 ? 'Ativo' : 'Inativo'}}
 
     </template>
-   
+
+     <template v-slot:item.categoria="{ item }">
+
+      {{item.category.name}}
+
+    </template>  
 
     <template v-slot:item.actions="{ item }">
 
@@ -201,7 +206,7 @@
         isNewProduct: state => state.product.create,
       }),
       ...mapGetters({
-        items: "product/items",
+        items: "product/items"        
       }),
 
       headers () {
@@ -210,7 +215,7 @@
           { text: 'Nome', value: 'name' },
           { text: 'Preço', value: 'price' },
           { text: 'Status', value: 'status' },
-          { text: 'Categoria', value: 'category.name' },
+          { text: 'Categoria', value: 'categoria' },
           { text: 'Imagem', value: 'image' },
           { text: 'Opções', value: 'actions', sortable: false },          
         ]

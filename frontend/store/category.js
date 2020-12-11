@@ -94,7 +94,7 @@ export const actions = {
 
     this.commit("config/SET_LOADING", true)
 
-    const items = await this.$axios.$post('/api/categorias',{where:payload}).then(response => {
+    const items = await this.$axios.$get('/api/categoria').then(response => {
 
       if(response.items !== undefined){  
 

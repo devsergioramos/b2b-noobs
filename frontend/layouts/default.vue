@@ -30,7 +30,7 @@
         <v-list-item-subtitle>B2B-Noobs</v-list-item-subtitle>
         <div class="overline mb-2">
 
-        Bem vindo
+        Bem vindo2
 
         </div>
       </v-list-item-content>
@@ -46,36 +46,40 @@
     light
   >
 
-  <v-expansion-panels>
-    <v-expansion-panel>
- 
-      <v-expansion-panel-content>
-
         <v-list>
           <v-list-item-group
             active-class="border"
             color="indigo"
             >                  
    
-
+          <NuxtLink to="/produtos">
             <v-list-item>
               <v-list-item-icon>
-                <v-icon v-text="'mdi-account-lock'"></v-icon>
+                <v-icon v-text="'mdi-sitemap'"></v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title v-text="'Usuários'"></v-list-item-title>
+                <v-list-item-title v-text="'Produtos'"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
+          </NuxtLink>
 
+          <NuxtLink to="/categorias">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon v-text="'mdi-table'"></v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="'Categorias'"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </NuxtLink>
 
             
 
           </v-list-item-group>
         </v-list>
 
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-</v-expansion-panels>
+   
 
 
 
@@ -194,4 +198,5 @@ export default {
 .border {
   border: 2px dashed orange;
 }
+a {  text-decoration: none;}
 </style>
