@@ -6,8 +6,6 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _f80abc42 = () => interopDefault(import('../pages/categorias.vue' /* webpackChunkName: "pages/categorias" */))
 const _131068a5 = () => interopDefault(import('../pages/dashboard.vue' /* webpackChunkName: "pages/dashboard" */))
-const _38d9682b = () => interopDefault(import('../pages/inspire.vue' /* webpackChunkName: "pages/inspire" */))
-const _75229f7a = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
 const _7c425849 = () => interopDefault(import('../pages/logout.vue' /* webpackChunkName: "pages/logout" */))
 const _047d9d99 = () => interopDefault(import('../pages/produtos.vue' /* webpackChunkName: "pages/produtos" */))
 const _a90a073a = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
@@ -36,14 +34,6 @@ export const routerOptions = {
     path: "/dashboard",
     component: _131068a5,
     name: "dashboard"
-  }, {
-    path: "/inspire",
-    component: _38d9682b,
-    name: "inspire"
-  }, {
-    path: "/login",
-    component: _75229f7a,
-    name: "login"
   }, {
     path: "/logout",
     component: _7c425849,

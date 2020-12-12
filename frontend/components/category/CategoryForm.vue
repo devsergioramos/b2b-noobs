@@ -40,20 +40,7 @@
                   </v-col>
                 </v-row>
 
-                <v-row>
-                  <v-col
-                    cols="6"
-                    sm="6"
-                    md="6"
-                  >
-                  Cor
-                    <v-color-picker
-                      v-model="color"
-                      dot-size="25"
-                      swatches-max-height="200"
-                      :rules="[v => !!v || 'Escola a Cor']"
-                    ></v-color-picker>
-                  </v-col>
+                 <v-row>
                   <v-col
                     cols="6"
                     sm="6"
@@ -70,10 +57,38 @@
                     :rules="[v => !!v || 'Selecione o Status']"
                   ></v-select>
                   </v-col>
+                  <v-col
+                    cols="6"
+                    sm="6"
+                    md="6"
+                  >
+                  Cor
+                    
+                    <v-chip
+                      v-if="dataItem.color"
+                      :color="dataItem.color"
+                    >
+                    </v-chip>
+                  </v-col>
+                </v-row>  
+
+                <v-row  v-if="isNew || isEdit">
+                  <v-col
+                    cols="6"
+                    sm="6"
+                    md="6"
+                  >
+                  Selecionar Nova Cor
+                    <v-color-picker
+                      v-model="color"
+                      dot-size="25"
+                      swatches-max-height="200"
+                      :rules="[v => !!v || 'Escola a Cor']"                     
+                    ></v-color-picker>
+                  </v-col>             
 
                 </v-row>
-         
-               
+
 
               </v-container>
             </v-card-text>
@@ -217,7 +232,14 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
       },
       isShow(val) {
         this.dataItem = this.item
-      }
+      },
+      isNew(val) {
+        this.dataItem = {
+          name: '',
+          status: '',
+          color: ''
+        };
+      },
     },
   }
 </script>

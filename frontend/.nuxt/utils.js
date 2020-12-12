@@ -169,7 +169,7 @@ export async function setContext (app, context) {
       payload: context.payload,
       error: context.error,
       base: '/',
-      env: {}
+      env: {"URL_API":"http://localhost.b2b-noobs","PROJECT_NAME":"B2B-NOOBS"}
     }
     // Only set once
     if (!process.static && context.req) {

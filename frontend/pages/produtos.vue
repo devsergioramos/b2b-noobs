@@ -29,7 +29,7 @@
 
       <v-toolbar
         flat
-        color="success"
+        color="primary"
       >
 
         <v-toolbar-title >        
@@ -39,7 +39,7 @@
           size="36"
           class="mr-5"
         >
-          mdi-account-switch
+          mdi-sitemap
         </v-icon>
         Produtos
         </v-toolbar-title>
@@ -108,24 +108,17 @@
           @change="filter($event)"
       ></v-select>
 -->
-        <v-select
-          v-model="selecteds"
-          :items="filters"
-          label="Filtro"
-          multiple
-          chips
-          dense
-          hint="Selecione para filtrar os produtos"
-          persistent-hint
-          deletable-chips
-          class="mx-4"
-          @change="filter($event)"
-        ></v-select>
+       
 
  
 
     </template>
 
+    <template v-slot:item.price="{ item }">
+
+      R$ {{item.price}}
+
+    </template>
     
     <template v-slot:item.status="{ item }">
 
@@ -138,6 +131,18 @@
       {{item.category.name}}
 
     </template>  
+
+     <template v-slot:item.image="{ item }">
+
+      <v-img
+        :lazy-src="urlApi+'/images/products/'+item.image"
+        max-width="100"
+        :src="urlApi+'/images/products/'+item.image"
+        v-if="item.image"
+      ></v-img>
+
+    </template>  
+
 
     <template v-slot:item.actions="{ item }">
 
@@ -172,6 +177,7 @@
 </template>
 <script>
   import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
+  import ENV from '@/env';
 
   import ProductForm from "@/components/product/ProductForm";
   import ProductDelete from "@/components/product/ProductDelete";
@@ -184,7 +190,8 @@
       alturaSelecionada: false,
       filters: ['Acima do Peso', 'Peso Ideal', 'Abaixo do Peso', 'Pessoas Altas','Pessoas Medianas','Pessoas Baixas',
       'Pessoas Intolerantes a Lactose','Pessoas Atletas'],
-      selecteds: []
+      selecteds: [],
+      urlApi: ENV.urlApi
     }),
     layout: "default",
     components: {
@@ -227,7 +234,7 @@
     },
 
     mounted () {
-      this.$store.dispatch('product/showList',true)
+      this.fetchData()         
     },
 
     methods: {
@@ -239,9 +246,10 @@
       },
       fetchData() {
 
+        this.$store.dispatch('product/showList',true);
         this.$store.dispatch('product/fetchItems');
 
-},
+      },
       dialogItem (item, mode) {  
         
         this.$store.dispatch('product/'+mode);
@@ -249,173 +257,10 @@
         this.$store.dispatch('product/item',Object.assign({}, item));  
         this.$store.dispatch('product/indexItem',this.items.indexOf(item));
       },
-      filter ( selecteds ) {
-
-        //this.filters = this.filters_original
-       
-        this.data = []
-
-        var filter = this.items
-
-        let pesoSelecionado = ''
-        let alturaSelecionada = ''
-
-        for(var i=0;i<selecteds.length;i++){
-
-          let event = selecteds[i]
-
-          if(event=='Acima do Peso'){
-
-            if(pesoSelecionado){
-
-              let index = this.selecteds.indexOf(event)
-              this.selecteds.splice(index, 1)
-
-              this.$toast.error("Peso Já Selecionado. Remova:'"+pesoSelecionado+"'",{
-                position:'top-right',
-                duration:3000,
-                keepOnHover:true
-              })
-
-            }else{
-
-              filter = filter.filter((item) => {
-                return parseInt(item.weight) >= 90
-              })
-
-              pesoSelecionado = event
-            }
-
-          }else if(event=='Peso Ideal'){
-
-            if(pesoSelecionado){
-
-              let index = this.selecteds.indexOf(event)
-              this.selecteds.splice(index, 1)
-
-              this.$toast.error("Peso Já Selecionado. Remova:'"+pesoSelecionado+"'",{
-                position:'top-right',
-                duration:3000,
-                keepOnHover:true
-              })
-
-            }else{
-
-              filter = filter.filter((item) => {
-                return item.weight >= 70 && item.weight <= 89
-              })
-
-              pesoSelecionado = event
-            }
-
-          }else if(event=='Abaixo do Peso'){
-
-            if(pesoSelecionado){
-
-              let index = this.selecteds.indexOf(event)
-              this.selecteds.splice(index, 1)
-
-              this.$toast.error("Peso Já Selecionado. Remova:'"+pesoSelecionado+"'",{
-                position:'top-right',
-                duration:3000,
-                keepOnHover:true
-              })
-
-            }else{
-
-              filter = filter.filter((item) => {
-                return item.weight <= 70
-              })
-
-              pesoSelecionado = event
-            }
-
-          }else if(event=='Pessoas Altas'){
-
-            if(alturaSelecionada){
-
-              let index = this.selecteds.indexOf(event)
-              this.selecteds.splice(index, 1)
-
-              this.$toast.error("Altura Já Selecionada. Remova:'"+alturaSelecionada+"'",{
-                position:'top-right',
-                duration:3000,
-                keepOnHover:true
-              })
-
-            }else{
-
-              filter = filter.filter((item) => {
-                return item.height >= 180
-              })
-
-              alturaSelecionada = event
-            }            
-         
-          }else if(event=='Pessoas Medianas'){
-
-            if(alturaSelecionada){
-
-              let index = this.selecteds.indexOf(event)
-              this.selecteds.splice(index, 1)
-
-              this.$toast.error("Altura Já Selecionada. Remova:'"+alturaSelecionada+"'",{
-                position:'top-right',
-                duration:3000,
-                keepOnHover:true
-              })
-
-            }else{
-
-              filter = filter.filter((item) => {
-                return item.height >= 160 && item.height <= 179
-              })
-
-              alturaSelecionada = event
-            }         
-
-          }else if(event=='Pessoas Baixas'){
-
-            if(alturaSelecionada){
-
-              let index = this.selecteds.indexOf(event)
-              this.selecteds.splice(index, 1)
-
-              this.$toast.error("Altura Já Selecionada. Remova:'"+alturaSelecionada+"'",{
-                position:'top-right',
-                duration:3000,
-                keepOnHover:true
-              })
-
-            }else{
-
-              filter = filter.filter((item) => {
-                return item.height <= 159
-              })
-
-              alturaSelecionada = event
-            }          
-
-          }else if(event=='Pessoas Intolerantes a Lactose'){
-            filter = filter.filter((item) => {
-              return item.lactose_intolerance == true
-            })
-          }else if(event=='Pessoas Atletas'){
-            filter = filter.filter((item) => {
-              return item.athlete == true
-            })
-          }
-        }
-        
-        this.data = filter;
-      }
+  
     },
     watch: {
-      isShowList (val) {
-
-        if(this.isShowList) this.fetchData()           
-          
-      },
+    
       items ( val ) {
         this.data = this.items
       }

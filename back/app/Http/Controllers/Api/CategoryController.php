@@ -26,10 +26,31 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $items = $this->model::with('products')->get();
+    {        
 
-        return response()->json(['items'=>$items]);
+        try {
+
+            $items = $this->model::with('products')->get();
+
+            return response()->json(['status'=>true,'items'=>$items]);
+
+        } catch (\Exception $e) {//errors exceptions
+
+            $response = null;
+
+            switch (get_class($e)) {
+              case QueryException::class:$response = $e->getMessage();
+              case Exception::class:$response = $e->getMessage();
+              case ValidationException::class:$response = $e;
+              default: $response = get_class($e);
+            }
+
+            $response = method_exists($e,'getMessage')?$e->getMessage():get_class($e);
+
+            return response()->json(['status'=>false,'msg'=>$response]);
+
+        }
+
     }
 
     /**
@@ -51,7 +72,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => ['required', 'string', 'max:255', 'unique:categories'],
+            'name' => ['required', 'string', 'max:255'],
             'color' => ['required'],
             'status' => ['required']
         ];
@@ -65,7 +86,7 @@ class CategoryController extends Controller
 
         try {
 
-            $slug = str_slug($request->name);
+            $slug = str_slug($request->name.time());
 
             $model = new $this->model;
 
@@ -79,8 +100,8 @@ class CategoryController extends Controller
 
             $response .= ' Cadastrada com Sucesso!';
 
-            $products = \App\Model\Product::whereCategoryId($model->id);
-            $model->products = $products;
+            //$products = \App\Models\Product::whereCategoryId($model->id);
+            //$model->products = $products;
 
             return response()->json(['status'=>true,'msg'=>$response,'item'=>$model]);
 
@@ -108,11 +129,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $categoria)
+    public function show($categoria)
     {
         try {
 
-            $item = $categoria;
+            $item = $this->model::findOrFail($categoria);
 
             return response()->json(['item'=>$item]);
 
@@ -149,10 +170,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $categoria)
+    public function update(Request $request, $categoria)
     {
         $rules = [
-            'name' => ['required', 'string', 'max:255', Rule::unique('categories')->ignore($request->id)],
+            'name' => ['required', 'string', 'max:255'],
             'color' => ['required'],
             'status' => ['required']
         ];
@@ -166,9 +187,9 @@ class CategoryController extends Controller
 
         try {            
 
-            $slug = str_slug($request->name);
+            $slug = str_slug($request->name.time());
 
-            $model = $categoria;
+            $model = $this->model::findOrFail($categoria);
 
             $model->name = $request->name;
             $model->color = $request->color;
@@ -180,8 +201,8 @@ class CategoryController extends Controller
 
             $response .= ' Editada com Sucesso!';
 
-            $products = \App\Model\Product::whereCategoryId($model->id);
-            $model->products = $products;
+            //$products = \App\Models\Product::whereCategoryId($model->id);
+            //$model->products = $products;
 
             return response()->json(['status'=>true,'msg'=>$response,'item'=>$model]);
 
@@ -209,13 +230,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $categoria)
+    public function destroy($categoria)
     {
         try {
          
-            $model = $categoria;
-
-            $deleted = $model->delete();
+            $this->model::findOrFail($categoria)->delete();
 
             $response = 'Categoria Deletada com Sucesso!';
 

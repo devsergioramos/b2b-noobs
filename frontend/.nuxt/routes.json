@@ -14,20 +14,6 @@
     "_name": "_131068a5"
   },
   {
-    "name": "inspire",
-    "path": "/inspire",
-    "component": "/var/www/html/b2b-noobs/b2b-noobs/frontend/pages/inspire.vue",
-    "chunkName": "pages/inspire",
-    "_name": "_38d9682b"
-  },
-  {
-    "name": "login",
-    "path": "/login",
-    "component": "/var/www/html/b2b-noobs/b2b-noobs/frontend/pages/login.vue",
-    "chunkName": "pages/login",
-    "_name": "_75229f7a"
-  },
-  {
     "name": "logout",
     "path": "/logout",
     "component": "/var/www/html/b2b-noobs/b2b-noobs/frontend/pages/logout.vue",

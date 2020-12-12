@@ -3,8 +3,8 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: '%s - b2b-noobs',
-    title: 'b2b-noobs',
+    titleTemplate: process.env.PROJECT_NAME,
+    title: process.env.PROJECT_NAME,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -14,7 +14,6 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
   ],
@@ -31,15 +30,22 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     '@nuxtjs/pwa',
-    '@nuxtjs/axios',
+    ['@nuxtjs/axios', {
+      requestInterceptor (config) {
+        config.headers.common['Content-Type'] = 'multipart/form-data;'
+        return config
+      }
+    }],
     '@nuxtjs/proxy',
     '@nuxtjs/toast',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    '@nuxt/http'
   ],
 
   /* Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
@@ -62,7 +68,7 @@ export default {
   },*/
   pwa: {
     manifest: {
-      name: 'Nuxt.js b2b-noobs',
+      name: process.env.PROJECT_NAME,
       short_name: 'Nuxt.js PWA',
       start_url: '/',
       theme_color: '#424242',
@@ -78,14 +84,14 @@ export default {
   axios: {
     /* set API_URL environment variable to configure access to the API
     */
-    baseURL: 'http://localhost.b2b-noobs',
+    baseURL: process.env.URL_API,
     redirectError: {
       404: '/notfound'
     }
   },
   proxy: {
     '/api': {
-      target: 'http://localhost.b2b-noobs',
+      target: process.env.URL_API,
       pathRewrite: {
         '^/api' : '/'
       },changeOrigin: true

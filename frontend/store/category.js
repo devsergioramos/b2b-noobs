@@ -96,7 +96,7 @@ export const actions = {
 
     const items = await this.$axios.$get('/api/categoria').then(response => {
 
-      if(response.items !== undefined){  
+      if(response.status){  
 
         this.commit("config/SET_LOADING", false)
         
@@ -104,7 +104,7 @@ export const actions = {
         
       }else{
 
-        this.$toast.error('Erro ao buscar as Categorias ..',{
+        this.$toast.error(response.msg,{
           position:'top-right',
           duration:3000,
           keepOnHover:true
@@ -168,13 +168,13 @@ export const actions = {
   
     await this.$axios.$post('/api/categoria',item).then(response => {
       
-      if(response.item !== undefined){
+      if(response.status){
 
         this.commit("config/SET_LOADING", false)  
                  
         commit("STORE",response.item)
         
-        this.$toast.success('Cadastrado com sucesso!',{
+        this.$toast.success(response.msg,{
           position:'top-right',
           duration:3000,
           keepOnHover:true
@@ -184,7 +184,7 @@ export const actions = {
 
       }else{
 
-        this.$toast.error('Erro ao salvar dados ..',{
+        this.$toast.error(response.msg,{
           position:'top-right',
           duration:3000,
           keepOnHover:true
@@ -207,9 +207,11 @@ export const actions = {
       
       this.commit("config/SET_LOADING", true)
 
-      await this.$axios.$put('/api/categoria/'+item.id,item).then(response => {
+      await this.$axios.$post('/api/categoria/'+item.id,item).then(response => {
+
+        console.log(response)
     
-        if(response.item !== undefined && response.item.length){ 
+        if(response.status){ 
           
           this.commit("config/SET_LOADING", false)
 
@@ -217,7 +219,7 @@ export const actions = {
 
           commit("UPDATE")   
           
-          this.$toast.success('Atualizado com sucesso!',{
+          this.$toast.success(response.msg,{
             position:'top-right',
             duration:3000,
             keepOnHover:true
@@ -227,7 +229,7 @@ export const actions = {
           
         }else{
 
-          this.$toast.error('Erro ao salvar dados ..',{
+          this.$toast.error(response.msg,{
             position:'top-right',
             duration:3000,
             keepOnHover:true
@@ -263,14 +265,16 @@ export const actions = {
       this.commit("config/SET_LOADING", true)
 
       await this.$axios.$delete('/api/categoria/'+item.id).then(response => {
+
+        console.log(response)
        
-        if(response){  
+        if(response.status){  
 
           this.commit("config/SET_LOADING", false)
 
           commit("REMOVE")  
 
-          this.$toast.success('Deletado com sucesso!',{
+          this.$toast.success(response.msg,{
             position:'top-right',
             duration:3000,
             keepOnHover:true
@@ -280,7 +284,7 @@ export const actions = {
           
         }else{
 
-          this.$toast.error('Erro ao salvar dados ..',{
+          this.$toast.error(response.msg,{
             position:'top-right',
             duration:3000,
             keepOnHover:true

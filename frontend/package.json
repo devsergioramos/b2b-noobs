@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@mdi/font": "^5.8.55",
+    "@nuxt/http": "^0.6.1",
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/proxy": "^2.0.1",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@nuxtjs/toast": "^3.3.1",

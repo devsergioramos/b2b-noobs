@@ -1,5 +1,5 @@
 {
-  "title": "Nuxt.js b2b-noobs",
+  "title": "B2B-NOOBS",
   "meta": [
     {
       "hid": "charset",
@@ -18,7 +18,7 @@
     {
       "hid": "apple-mobile-web-app-title",
       "name": "apple-mobile-web-app-title",
-      "content": "Nuxt.js b2b-noobs"
+      "content": "B2B-NOOBS"
     },
     {
       "hid": "theme-color",
@@ -35,13 +35,13 @@
       "hid": "og:title",
       "name": "og:title",
       "property": "og:title",
-      "content": "Nuxt.js b2b-noobs"
+      "content": "B2B-NOOBS"
     },
     {
       "hid": "og:site_name",
       "name": "og:site_name",
       "property": "og:site_name",
-      "content": "Nuxt.js b2b-noobs"
+      "content": "B2B-NOOBS"
     }
   ],
   "link": [
@@ -51,7 +51,7 @@
     },
     {
       "rel": "manifest",
-      "href": "/_nuxt/manifest.d42fb293.json",
+      "href": "/_nuxt/manifest.1058439c.json",
       "hid": "manifest"
     }
   ],

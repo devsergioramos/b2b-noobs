@@ -1,52 +1,15 @@
 <template>
-  <div>
-  
-   teste dashboard
+  <v-row>
+    <v-col class="text-center grey--text">
 
-  </div>
+      <h1>Página Dashboard</h1>
+
+      <img
+        src="/v.png"
+        alt="Vuetify.js"
+        class="mb-5"
+      >
+    
+    </v-col>
+  </v-row>
 </template>
-<script>
-  import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-
-  export default {
-    data: () => ({
-    
-    }),
-    layout: "default",
-    components: {
-   
-    },
-    created () {
-
-      
-
-    },
-    updated () {
-      
-    },
-    computed: {
-    
-    },
-    watch: {
-
-      
-    },
-
-    mounted () {
-     
-    },
-
-    methods: {
-     
-    },
-    watch: {
-    
-    },
-  }
-</script>
-<style>
-/*
-  table {
-     table-layout: fixed;
-  }*/
-</style>

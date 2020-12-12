@@ -1,7 +1,7 @@
 <template>
  <v-app >
 
-    <v-navigation-drawer left app v-model="sidebarLeft" mobile-breakpoint="650" 
+    <v-navigation-drawer left app v-if="sidebarLeft" mobile-breakpoint="650" 
     dark style="background-color:#8f8f90">
 
   <v-card
@@ -27,10 +27,10 @@
           *
         </v-list-item-title>
         -->
-        <v-list-item-subtitle>B2B-Noobs</v-list-item-subtitle>
+        <v-list-item-subtitle>{{projectName}}</v-list-item-subtitle>
         <div class="overline mb-2">
 
-        Bem vindo2
+        Bem vindo
 
         </div>
       </v-list-item-content>
@@ -52,6 +52,17 @@
             color="indigo"
             >                  
    
+          <NuxtLink to="/dashboard">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon v-text="'mdi-adjust'"></v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="'Dashboard'"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </NuxtLink>
+
           <NuxtLink to="/produtos">
             <v-list-item>
               <v-list-item-icon>
@@ -62,6 +73,7 @@
               </v-list-item-content>
             </v-list-item>
           </NuxtLink>
+   
 
           <NuxtLink to="/categorias">
             <v-list-item>
@@ -74,6 +86,17 @@
             </v-list-item>
           </NuxtLink>
 
+          <NuxtLink to="/">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon v-text="'mdi-arrow-expand-all'"></v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="'Página do Site'"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </NuxtLink>
+      
             
 
           </v-list-item-group>
@@ -91,10 +114,12 @@
 
    <v-app-bar app>   
      
-     <v-app-bar-nav-icon @click="sidebarLeft = !sidebarLeft"></v-app-bar-nav-icon>  
-  
-      <v-spacer></v-spacer>
+     <v-app-bar-nav-icon @click="sidebar()"></v-app-bar-nav-icon>  
 
+     <v-toolbar-title>{{projectName}}</v-toolbar-title>
+  
+     
+<!--
       <v-tooltip right>
         <template v-slot:activator="{ on, attrs }">
           <v-btn 
@@ -109,7 +134,10 @@
         </template>
         <span>Sair</span>
       </v-tooltip>
+-->
 
+
+     <v-spacer></v-spacer>
    </v-app-bar>
  
    <v-main light style="background-color:#fff">
@@ -130,23 +158,26 @@
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
 import Loading from "@/components/loading";
+import ENV from '@/env';
 
  
 export default {
  data: () => ({
-    sidebarLeft: false,
     time: '',
     date: '',
+    projectName: ENV.projectName
  }),
   components: {   
     Loading
    },
  computed: {  
+      ...mapState({
+        sidebarLeft: state => state.config.sidebarLeft
+      }),
     ...mapGetters({
       isAuthenticated: "isAuthenticated",
-      loggedInUser: "loggedInUser",
-    }),
-
+      loggedInUser: "loggedInUser"
+    })
  },
   watch: {
 
@@ -156,6 +187,12 @@ export default {
     exit() {
       //this.$auth.logout();
       this.$router.push("/logout");
+    },
+    sidebar(){
+      if(this.sidebarLeft) 
+        this.$store.dispatch('config/sidebarLeft',false)
+      else
+        this.$store.dispatch('config/sidebarLeft',true)
     },
     updateTime() {      
 
@@ -179,9 +216,15 @@ export default {
     },
  },
  created() {
-
     var timerID = setInterval(this.updateTime, 1000);
     this.updateTime();
+ },
+  mounted(){
+   
+    if(this.$nuxt.$route.path == '/')
+      this.$store.dispatch('config/sidebarLeft',false)
+    else 
+      this.sidebar();
  }
 };
 </script>

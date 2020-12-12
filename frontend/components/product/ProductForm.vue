@@ -97,7 +97,7 @@
 
                 </v-row>
 
-                <v-row>             
+                <v-row v-if="isNew || isEdit">              
 
                    <v-col
                     cols="12"
@@ -105,12 +105,32 @@
                     md="12"
                   >
                   <v-file-input
+                    id="image"
                     truncate-length="15"
+                    @change="selectFile($event)"                    
                   ></v-file-input>
+
                   </v-col>
 
                 </v-row>
 
+                <v-row v-if="isShow || isEdit">             
+
+                   <v-col
+                    cols="12"
+                    sm="12"
+                    md="12"
+                    v-if="dataItem.image"
+                  >
+                  <v-img
+                    :lazy-src="urlApi+'/images/products/'+dataItem.image"
+                    max-width="100"
+                    :src="urlApi+'/images/products/'+dataItem.image"
+                  ></v-img>
+
+                  </v-col>
+
+                </v-row>
                
 
               </v-container>
@@ -146,6 +166,7 @@
 <script>
 
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
+import ENV from '@/env';
 
   export default {
     props: {
@@ -156,6 +177,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
         label: 'Produto',
         isValid: '',
         dataItem:{},
+        urlApi: ENV.urlApi,
         status: [
           {
             name:'Pendente',
@@ -220,6 +242,10 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
       changeCategory(event){
         this.dataItem.category_id = event;
       },
+      selectFile(event) {
+        console.log(event)
+        this.dataItem.image = event;
+      },
       close () {
         
         this.$store.dispatch('product/reset');
@@ -233,6 +259,8 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
           let mode = 'update'
 
           if(this.isNew) mode = 'store'  
+
+          
           
           this.$nextTick(() => {
             this.$store.dispatch('product/'+mode, this.dataItem);      
@@ -248,7 +276,8 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
         this.dataItem = {
           category: {
-            id:''
+            id:'',
+            image:''
           }
         };
 
@@ -267,7 +296,16 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
       },
       isShow(val) {
         this.dataItem = this.item
-      }
+      },
+      isNew(val) {
+          this.dataItem = {
+            name: '',
+            price: '',
+            status: '',
+            image: '',
+            category_id: ''
+          };
+      },
     },
   }
 </script>

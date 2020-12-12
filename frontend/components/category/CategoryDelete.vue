@@ -54,7 +54,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
       },
       deleteItemConfirm () {
 
-        this.$store.dispatch('product/deleteItem',this.dataItem)
+        this.$store.dispatch('category/deleteItem',this.dataItem)
 
       },
     },

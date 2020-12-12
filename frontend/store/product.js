@@ -96,7 +96,7 @@ export const state = () => ({
 
       const items = await this.$axios.$get('/api/produto').then(response => {
       
-        if(response.items !== undefined){  
+        if(response.status){  
 
           this.commit("config/SET_LOADING", false)
           
@@ -104,7 +104,7 @@ export const state = () => ({
           
         }else{
 
-          this.$toast.error('Erro ao buscar os Produtos ..',{
+          this.$toast.error(response.msg,{
             position:'top-right',
             duration:3000,
             keepOnHover:true
@@ -168,13 +168,13 @@ export const state = () => ({
     
       await this.$axios.$post('/api/produto',item).then(response => {
         
-        if(response.item !== undefined){
+        if(response.status){
 
           this.commit("config/SET_LOADING", false)  
                    
           commit("STORE",response.item)
           
-          this.$toast.success('Cadastrado com sucesso!',{
+          this.$toast.success(response.msg,{
             position:'top-right',
             duration:3000,
             keepOnHover:true
@@ -184,7 +184,7 @@ export const state = () => ({
 
         }else{
 
-          this.$toast.error('Erro ao salvar dados ..',{
+          this.$toast.error(response.msg,{
             position:'top-right',
             duration:3000,
             keepOnHover:true
@@ -207,9 +207,24 @@ export const state = () => ({
         
         this.commit("config/SET_LOADING", true)
 
-        await this.$axios.$put('/api/produto/'+item.id,item).then(response => {
+        const config = {
+            headers: { 'content-type': 'multipart/form-data' }
+        }      
+
+        let formData = new FormData()
+        formData.append("id", item.id)
+        formData.append("image", item.image)
+        formData.append("name", item.name)
+        formData.append("price", item.price)
+        formData.append("status", item.status)
+        formData.append("category_id", item.category_id)
+        formData.append('_method', 'PATCH')   
+        
+        await this.$axios.$post('/api/produto/'+item.id, formData).then(response => {
       
-          if(response.item !== undefined && response.item.length){ 
+          if(response.status){ 
+
+            item.image = response.item.image
             
             this.commit("config/SET_LOADING", false)
 
@@ -217,7 +232,7 @@ export const state = () => ({
 
             commit("UPDATE")   
             
-            this.$toast.success('Atualizado com sucesso!',{
+            this.$toast.success(response.msg,{
               position:'top-right',
               duration:3000,
               keepOnHover:true
@@ -227,7 +242,7 @@ export const state = () => ({
             
           }else{
 
-            this.$toast.error('Erro ao salvar dados ..',{
+            this.$toast.error(response.msg,{
               position:'top-right',
               duration:3000,
               keepOnHover:true
@@ -264,13 +279,13 @@ export const state = () => ({
 
         await this.$axios.$delete('/api/produto/'+item.id).then(response => {
          
-          if(response){  
+          if(response.status){  
 
             this.commit("config/SET_LOADING", false)
 
             commit("REMOVE")  
 
-            this.$toast.success('Deletado com sucesso!',{
+            this.$toast.success(response.msg,{
               position:'top-right',
               duration:3000,
               keepOnHover:true
@@ -280,7 +295,7 @@ export const state = () => ({
             
           }else{
 
-            this.$toast.error('Erro ao salvar dados ..',{
+            this.$toast.error(response.msg,{
               position:'top-right',
               duration:3000,
               keepOnHover:true
