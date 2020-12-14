@@ -207,7 +207,14 @@ export const actions = {
       
       this.commit("config/SET_LOADING", true)
 
-      await this.$axios.$post('/api/categoria/'+item.id,item).then(response => {
+      let formData = new FormData()
+      formData.append("id", item.id)
+      formData.append("name", item.name)
+      formData.append("status", item.status)
+      formData.append("color", item.color)
+      formData.append('_method', 'PATCH')
+
+      await this.$axios.$post('/api/categoria/'+item.id,formData).then(response => {
 
         console.log(response)
     
