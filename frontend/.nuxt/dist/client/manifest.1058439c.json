@@ -1,0 +1,10 @@
+{
+  "name": "B2B-NOOBS",
+  "short_name": "Nuxt.js PWA",
+  "icons": [],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#424242",
+  "lang": "en"
+}

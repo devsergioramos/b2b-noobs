@@ -1,0 +1,37 @@
+[
+  {
+    "name": "categorias",
+    "path": "/categorias",
+    "component": "/var/www/html/b2b-noobs/b2b-noobs/frontend/pages/categorias.vue",
+    "chunkName": "pages/categorias",
+    "_name": "_f80abc42"
+  },
+  {
+    "name": "dashboard",
+    "path": "/dashboard",
+    "component": "/var/www/html/b2b-noobs/b2b-noobs/frontend/pages/dashboard.vue",
+    "chunkName": "pages/dashboard",
+    "_name": "_131068a5"
+  },
+  {
+    "name": "logout",
+    "path": "/logout",
+    "component": "/var/www/html/b2b-noobs/b2b-noobs/frontend/pages/logout.vue",
+    "chunkName": "pages/logout",
+    "_name": "_7c425849"
+  },
+  {
+    "name": "produtos",
+    "path": "/produtos",
+    "component": "/var/www/html/b2b-noobs/b2b-noobs/frontend/pages/produtos.vue",
+    "chunkName": "pages/produtos",
+    "_name": "_047d9d99"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/var/www/html/b2b-noobs/b2b-noobs/frontend/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_a90a073a"
+  }
+]

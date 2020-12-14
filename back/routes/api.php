@@ -17,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//api produto
+Route::apiResource('produto', \App\Http\Controllers\Api\ProductController::class);
+
+//api categoria
+Route::apiResource('categoria', \App\Http\Controllers\Api\CategoryController::class);
+
+

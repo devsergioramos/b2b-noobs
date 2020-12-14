@@ -1,0 +1,56 @@
+{
+  "Logo": {
+    "description": "Auto imported from components/Logo.vue"
+  },
+  "LazyLogo": {
+    "description": "Auto imported from components/Logo.vue"
+  },
+  "VuetifyLogo": {
+    "description": "Auto imported from components/VuetifyLogo.vue"
+  },
+  "LazyVuetifyLogo": {
+    "description": "Auto imported from components/VuetifyLogo.vue"
+  },
+  "Loading": {
+    "description": "Auto imported from components/loading.vue"
+  },
+  "LazyLoading": {
+    "description": "Auto imported from components/loading.vue"
+  },
+  "CategoryDelete": {
+    "description": "Auto imported from components/category/CategoryDelete.vue"
+  },
+  "LazyCategoryDelete": {
+    "description": "Auto imported from components/category/CategoryDelete.vue"
+  },
+  "CategoryForm": {
+    "description": "Auto imported from components/category/CategoryForm.vue"
+  },
+  "LazyCategoryForm": {
+    "description": "Auto imported from components/category/CategoryForm.vue"
+  },
+  "CategoryList": {
+    "description": "Auto imported from components/category/CategoryList.vue"
+  },
+  "LazyCategoryList": {
+    "description": "Auto imported from components/category/CategoryList.vue"
+  },
+  "ProductDelete": {
+    "description": "Auto imported from components/product/ProductDelete.vue"
+  },
+  "LazyProductDelete": {
+    "description": "Auto imported from components/product/ProductDelete.vue"
+  },
+  "ProductForm": {
+    "description": "Auto imported from components/product/ProductForm.vue"
+  },
+  "LazyProductForm": {
+    "description": "Auto imported from components/product/ProductForm.vue"
+  },
+  "ProductList": {
+    "description": "Auto imported from components/product/ProductList.vue"
+  },
+  "LazyProductList": {
+    "description": "Auto imported from components/product/ProductList.vue"
+  }
+}

@@ -8,6 +8,23 @@
 
 ---
 
+##### Print das telas do projeto
+
+<p align="center"><img src="prints/1.png" >
+</p>
+
+<p align="center"><img src="prints/2.png" >
+</p>
+
+<p align="center"><img src="prints/3.png" >
+</p>
+
+<p align="center"><img src="prints/4.png" >
+</p>
+
+<p align="center"><img src="prints/5.png" >
+</p>
+
 ### Como iniciar o projeto:
 
 + O Laravel possui um conjunto de requisitos para funcionar perfeitamente em ambientes específicos. Esta seção específica - [requisítos do laravel](https://laravel.com/docs/7.x#server-requirements) - Laravel Documentação.
@@ -76,6 +93,21 @@ yarn build
 ##### Lints and fixes files
 ```
 yarn lint
+```
+
+##### Crie um arquivo .env a partir de .env.example
+```
+coloqe a url da api (url do servidor do laravel) em URL_API
+digite o nome do projeto em PROJECT_NAME
+```
+
+##### Compile e Rode 
+```
+npm run dev
+
+ou
+
+npm run build (para producao)
 ```
 
 ### Componentes
